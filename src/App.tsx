@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./styles/App.sass";
+import AppBarComponent from "./components/appBar/AppBar";
+import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import { useEffect } from "react";
+import { fetchAuthMe } from "./store/slices/loginSlice";
+
+import RegisterPage from "./pages/RegisterPage";
+import CardPage from "./pages/CardPage";
+import CreatePost from "./pages/Create-post-page";
+
+function App(): JSX.Element {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchAuthMe());
+    }, []);
+    return (
+        <div className='App'>
+            <AppBarComponent />
+            <div className='mainContainer'>
+                <Routes>
+                    <Route path='/' element={<HomePage />} />
+                    <Route path='/register' element={<RegisterPage />} />
+                    <Route path='/login' element={<LoginPage />} />
+                    <Route path='/posts/:id' element={<CardPage />} />
+                    <Route path='/posts/:id/edit' element={<CreatePost />} />
+                    <Route path='/add-post' element={<CreatePost />} />
+                </Routes>
+            </div>
+        </div>
+    );
 }
 
 export default App;
