@@ -5,14 +5,20 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useSelector, useDispatch } from "react-redux";
-import { posts_getLimit } from "../../store/slices/postsSlice";
+import { posts_getLimit, posts_getPageNum, fetchPosts } from "../../store/slices/postsSlice";
 
 const SelectPanel = () => {
-    const dispatch = useDispatch()
-    const limit = useSelector((state: any) => state.postsSlice.limit);
+    const dispatch = useDispatch();
+    const limitN = useSelector((state: any) => state.postsSlice.limit);
+    const pageN = useSelector((state: any) => state.postsSlice.page);
+    const activeBtn = useSelector((state: any) => state.postsSlice.sortBtn);
+    const searchValue = useSelector((state: any) => state.postsSlice.searchValue);
 
     const handleChange = (event: SelectChangeEvent) => {
-        dispatch(posts_getLimit(event.target.value))
+        dispatch(posts_getLimit(event.target.value));
+        dispatch(posts_getPageNum(1));
+        
+        dispatch(fetchPosts({ page: 1, limit: event.target.value, search: searchValue, sort: activeBtn }));
     };
 
     return (
@@ -22,7 +28,7 @@ const SelectPanel = () => {
                     autoWidth
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
-                    value={limit}
+                    value={limitN}
                     sx={{ fontSize: "12px" }}
                     onChange={handleChange}>
                     <MenuItem value={5} sx={{ fontSize: "12px" }}>

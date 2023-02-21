@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useCallback, useMemo, useState, useRef, useEffect } from "react";
 import SimpleMDEReact from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
@@ -7,9 +8,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import SpinnerDev from "../spinner/SpinnerDev";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllPosts, fetchPosts, posts_getPageNum } from "../../store/slices/postsSlice";
+import { fetchPosts, fetchAllPosts, posts_getPageNum } from "../../store/slices/postsSlice";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
-// замість простого алерта показувати снек з помилкою
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props: any, ref: any) {
+    return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
+
 const Editor = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,8 +31,10 @@ const Editor = () => {
     const [imageUrl, setImageUrl] = useState("");
     const inputFileRef: any = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [emptyData, setEmptyData] = useState(true);
     const limitN = useSelector((state: any) => state.postsSlice.limit);
+    const [openAlert, setOpenAlert] = useState(false);
 
     const isEditing = Boolean(id);
 
@@ -56,9 +64,14 @@ const Editor = () => {
         } as any;
     }, []);
 
+    const s = () => {
+        setIsLoading(false);
+        setSuccess(true);
+    };
+
     const sendForm = async () => {
+        setIsLoading(true);
         try {
-            setIsLoading(true);
             const fields = {
                 title: title,
                 text: text,
@@ -76,16 +89,30 @@ const Editor = () => {
             const { data } = isEditing ? await axios.patch(`/posts/${id}`, fields) : await axios.post("/posts", fields);
             // надсилаємо на сервер і відразу беремо отримані дані назад на клієнт. Потрібно витягнути айді, щоб відразу користувач перейшов на сторінку статті
             const _id = isEditing ? id : data._id;
-            navigate(`/posts/${_id}`);
+
+            if (data) {
+                setSuccess(true);
+                setIsLoading(false);
+                setOpenAlert(true);
+                setTimeout(() => {
+                    navigate(`/posts/${_id}`);
+                }, 5000);
+            } else {
+                setSuccess(false);
+            }
+
+            dispatch(fetchAllPosts({}));
+            dispatch(posts_getPageNum(1));
+            dispatch(fetchPosts({ page: 1, limit: limitN }));
         } catch (err) {
-            console.log(err);
-            alert("Помилка при створенні статті");
+            setIsLoading(false);
+            setOpenAlert(true);
         }
     };
 
     useEffect(() => {
         // ленгс перевіряти відповідно до беку
-        if (text && title) {
+        if (text && title.length >= 30) {
             setEmptyData(false);
         } else {
             setEmptyData(true);
@@ -106,6 +133,13 @@ const Editor = () => {
 
     const onClickRemoveImage = () => {
         setImageUrl("");
+    };
+
+    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOpenAlert(false);
     };
 
     return (
@@ -136,6 +170,7 @@ const Editor = () => {
             <TextField
                 value={title}
                 onChange={e => setTitle(e.target.value)}
+                helperText='at least 30 characters'
                 label='Title'
                 autoFocus
                 fullWidth
@@ -238,7 +273,21 @@ const Editor = () => {
                 />
             </Box>
             <SimpleMDEReact value={text} onChange={onChange} options={autofocusNoSpellcheckerOptions} />
-            <SpinnerDev onClickFunc={sendForm} btnText={isEditing ? "Save" : "Send"} emptyData={emptyData} />
+            <SpinnerDev
+                onClickFunc={sendForm}
+                btnText={isEditing ? "Save" : "Send"}
+                emptyData={emptyData}
+                loading={isLoading}
+                success={success}
+            />
+            <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
+                <Alert
+                    onClose={handleCloseAlert}
+                    severity={success ? "success" : "error"}
+                    sx={{ width: "100%", fontSize: "14px" }}>
+                    {success ? "Success, redirect to the Post page in 5 seconds..." : "Error"}
+                </Alert>
+            </Snackbar>
         </>
     );
 };

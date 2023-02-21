@@ -2,9 +2,8 @@ import "./sort-panel.sass";
 
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { useDispatch } from "react-redux";
-import { fetchSortPost, fetchPosts } from "../../store/slices/postsSlice";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts, posts_getPageNum, posts_getSortBtn } from "../../store/slices/postsSlice";
 import Box from "@mui/material/Box";
 
 import SelectPanel from "../select/Select-panel";
@@ -12,23 +11,22 @@ import SelectPanel from "../select/Select-panel";
 // э лоадінгБатон в пошук дати
 const SortPanel = () => {
     const dispatch = useDispatch();
-    const [activeBtn, setActiveBtn] = useState("");
+
+    const limitN = useSelector((state: any) => state.postsSlice.limit);
+    const activeBtn = useSelector((state: any) => state.postsSlice.sortBtn);
+    const searchValue = useSelector((state: any) => state.postsSlice.searchValue);
 
     const showSortedItems = (type: string) => {
-        if (type === "date") {
-            setActiveBtn("date");
-            dispatch(fetchSortPost("date"));
-            if (activeBtn === "date") {
-                setActiveBtn("");
-                dispatch(fetchPosts());
-            }
-        } else if (type === "views") {
-            setActiveBtn("views");
-            dispatch(fetchSortPost("views"));
-            if (activeBtn === "views") {
-                setActiveBtn("");
-                dispatch(fetchPosts());
-            }
+        // записуємо в стор яка кнопка сортування натиснута
+        dispatch(posts_getSortBtn(type));
+        // після кліку переходимо на 1 сторінку
+        dispatch(posts_getPageNum(1));
+        // якщо клік по вже вибраній кнопці, скидаємо на початкові налаштування
+        if (type === activeBtn) {
+            dispatch(posts_getSortBtn("all"));
+            dispatch(fetchPosts({ page: 1, limit: limitN, sort: "all", search: searchValue }));
+        } else {
+            dispatch(fetchPosts({ page: 1, limit: limitN, sort: type, search: searchValue }));
         }
     };
 

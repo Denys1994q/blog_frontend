@@ -1,15 +1,21 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import CheckIcon from "@mui/icons-material/Check";
 import SendIcon from "@mui/icons-material/Send";
 
-const SpinnerDev = ({ onClickFunc, btnText, emptyData }: any) => {
-    const [loading, setLoading] = React.useState(false);
-    const [success, setSuccess] = React.useState(false);
+type SpinnerDevProps = {
+    onClickFunc: any;
+    btnText: string;
+    emptyData: boolean;
+    loading: boolean;
+    success: boolean;
+};
+
+const SpinnerDev = ({ onClickFunc, btnText, loading, success, emptyData }: SpinnerDevProps) => {
     const timer = React.useRef<number>();
 
     const buttonSx = {
@@ -29,17 +35,7 @@ const SpinnerDev = ({ onClickFunc, btnText, emptyData }: any) => {
     }, []);
 
     const handleButtonClick = () => {
-        if (!loading) {
-            setSuccess(false);
-            setLoading(true);
-            timer.current = window.setTimeout(() => {
-                setSuccess(true);
-                setLoading(false);
-            }, 2000);
-            timer.current = window.setTimeout(() => {
-                onClickFunc();
-            }, 4000);
-        }
+        onClickFunc();
     };
 
     return (

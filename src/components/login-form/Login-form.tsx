@@ -11,10 +11,14 @@ import { fetchUserData } from "../../store/slices/loginSlice";
 import { Navigate } from "react-router-dom";
 
 import axios from "../../axios";
+import AlertComponent from "../alert/Alert";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
     const userData = useSelector((state: any) => state.loginSlice.userData);
+
+    const [openAlert, setOpenAlert] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const {
         register,
@@ -32,12 +36,15 @@ const LoginForm = () => {
     const onSubmit = async (values: any) => {
         const data = await dispatch(fetchUserData(values));
         if (!data.payload) {
-            alert("Authorization failed");
+            setOpenAlert(true);
+            setSuccess(false);
+        } else {
+            setSuccess(true);
         }
 
         if ("token" in data.payload) {
             window.localStorage.setItem("token", data.payload.token);
-        } 
+        }
     };
 
     useEffect(() => {
@@ -71,7 +78,7 @@ const LoginForm = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Box>
                         <TextField
-                            {...register("email", { required: "Вкажіть пошту" })}
+                            {...register("email", { required: "Enter your email" })}
                             error={Boolean(errors.email?.message)}
                             helperText={errors.email?.message}
                             id='email'
@@ -88,7 +95,7 @@ const LoginForm = () => {
                             }}
                         />
                         <TextField
-                            {...register("password", { required: "Вкажіть пароль" })}
+                            {...register("password", { required: "Enter your password" })}
                             error={Boolean(errors.password?.message)}
                             helperText={errors.password?.message}
                             id='password'
@@ -109,12 +116,21 @@ const LoginForm = () => {
                             color='secondary'
                             size='large'
                             fullWidth
-                            sx={{ fontSize: "12px", margin: "10px 0" }}>
+                            sx={{
+                                fontSize: "12px",
+                                margin: "10px 0",
+                            }}>
                             Login
                         </Button>
                     </Box>
                 </form>
             </Box>
+            <AlertComponent
+                setOpenAlert={setOpenAlert}
+                openAlert={openAlert}
+                success={success}
+                errorText={"Authorization failed"}
+            />
         </>
     );
 };

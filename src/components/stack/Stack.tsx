@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
 
 type StackComponentProps = {
     data: string[];
@@ -22,9 +23,11 @@ const StackComponent = ({ data }: StackComponentProps) => {
     });
 
     return (
-        <Box sx={{ width: "25%", fontSize: "14px", marginLeft: "auto" }}>
-            <Stack spacing={1}>{content}</Stack>
-        </Box>
+        <Grid container sx={{ fontSize: "14px" }}>
+            <Stack direction={{ lg: "row", md: "row", sm: "row", xs: "column" }} spacing={1}>
+                {content}
+            </Stack>
+        </Grid>
     );
 };
 

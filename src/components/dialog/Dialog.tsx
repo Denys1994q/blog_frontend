@@ -2,23 +2,38 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { posts_openAlert } from "../../store/slices/postsSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 type DialogComponentProps = {
-    open: boolean,
-    setOpen: any,
-    question: string,
-    onYes?: any,
-    id?: string 
-}
+    open: boolean;
+    alertMsg?: string;
+    setOpen: any;
+    question: string;
+    onYes?: any;
+    id?: string;
+};
 
-const DialogComponent = ({ open, setOpen, question, onYes, id }: DialogComponentProps): JSX.Element => {
-    // const [open, setOpen] = React.useState(false);
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props: any, ref: any) {
+    return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
+
+const DialogComponent = ({ open, alertMsg, setOpen, question, onYes }: DialogComponentProps): JSX.Element => {
+    const dispatch = useDispatch();
+    const openAlert: any = useSelector((state: any) => state.postsSlice.openAlert);
 
     const handleClickOpen = () => {
         setOpen(true);
+    };
+
+    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        dispatch(posts_openAlert(false));
     };
 
     const handleClose = () => {
@@ -26,7 +41,7 @@ const DialogComponent = ({ open, setOpen, question, onYes, id }: DialogComponent
     };
 
     const onYesFunc = () => {
-        onYes(id);
+        onYes();
         setOpen(false);
     };
 
@@ -49,6 +64,13 @@ const DialogComponent = ({ open, setOpen, question, onYes, id }: DialogComponent
                     </Button>
                 </DialogActions>
             </Dialog>
+            {alertMsg ? (
+                <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
+                    <Alert onClose={handleCloseAlert} severity='success' sx={{ width: "100%", fontSize: "14px" }}>
+                        {alertMsg}
+                    </Alert>
+                </Snackbar>
+            ) : null}
         </div>
     );
 };

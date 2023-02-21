@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login_logout } from "../../store/slices/loginSlice";
 import { createTheme } from "@mui/material/styles";
+import HomeIcon from "@mui/icons-material/Home";
 
 import DialogComponent from "../dialog/Dialog";
 
@@ -37,11 +38,16 @@ export const AppBarComponent = (): JSX.Element => {
         <>
             <Link to='/register'>
                 <Button
-                    // onClick={() => handleOpen()}
                     variant='outlined'
                     color='inherit'
                     startIcon={<PersonIcon />}
-                    sx={{ fontSize: "14px", marginRight: "10px", borderColor: "#2A2B2A", color: "#2A2B2A" }}>
+                    sx={{
+                        fontSize: "14px",
+                        marginRight: "10px",
+                        padding: "5px 12px",
+                        borderColor: "#2A2B2A",
+                        color: "#2A2B2A",
+                    }}>
                     Register
                 </Button>
             </Link>
@@ -50,7 +56,13 @@ export const AppBarComponent = (): JSX.Element => {
                     variant='outlined'
                     color='inherit'
                     startIcon={<LoginIcon />}
-                    sx={{ fontSize: "14px", marginRight: "10px", borderColor: "#2A2B2A", color: "#2A2B2A" }}>
+                    sx={{
+                        fontSize: "14px",
+                        marginRight: "10px",
+                        padding: "5px 12px",
+                        borderColor: "#2A2B2A",
+                        color: "#2A2B2A",
+                    }}>
                     Login
                 </Button>
             </Link>
@@ -61,11 +73,10 @@ export const AppBarComponent = (): JSX.Element => {
         <>
             <Link to='/add-post'>
                 <Button
-                    // onClick={() => handleOpen()}
                     variant='outlined'
                     color='success'
                     startIcon={<PersonIcon />}
-                    sx={{ fontSize: "14px", marginLeft: "auto", marginRight: "10px" }}>
+                    sx={{ fontSize: "14px", padding: "5px 12px", marginLeft: "auto", marginRight: "10px" }}>
                     Create Post
                 </Button>
             </Link>
@@ -75,10 +86,25 @@ export const AppBarComponent = (): JSX.Element => {
                     variant='contained'
                     color='error'
                     startIcon={<LoginIcon />}
-                    sx={{ fontSize: "14px" }}>
-                    Logout
-                </Button>
+                    sx={{ minWidth: "60px", fontSize: "14px", padding: "5px 5px" }}></Button>
             </Link>
+            {userData ? (
+                <img
+                    style={{
+                        width: "40px",
+                        height: "40px",
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                        marginLeft: "10px",
+                    }}
+                    src={
+                        userData.avatarUrl
+                            ? `http://localhost:4444${userData.avatarUrl}`
+                            : `http://localhost:4444/uploads/user.png`
+                    }
+                    alt='user-photo'
+                />
+            ) : null}
         </>
     );
 
@@ -86,13 +112,19 @@ export const AppBarComponent = (): JSX.Element => {
         <div>
             <Box>
                 <AppBar position='sticky' sx={{ backgroundColor: "#FFDED6" }}>
-                    <Toolbar>
+                    <Toolbar sx={{ padding: "0 4px" }}>
                         <Link to='/'>
                             <Button
                                 variant='outlined'
                                 color='inherit'
-                                sx={{ fontSize: "14px", borderColor: "#2A2B2A", color: "#2A2B2A" }}>
-                                Home
+                                sx={{
+                                    fontSize: "14px",
+                                    minWidth: "30px",
+                                    padding: "5px",
+                                    borderColor: "#2A2B2A",
+                                    color: "#2A2B2A",
+                                }}>
+                                <HomeIcon sx={{ padding: "0", fontSize: "20px", cursor: "pointer" }} />
                             </Button>
                         </Link>
                         <Box sx={{ marginLeft: "auto" }}>{userData ? logoutBtns : loginBtns}</Box>

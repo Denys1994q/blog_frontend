@@ -8,44 +8,47 @@ type PostsType = {
     page: number,
     searchValue: string,
     limit: null | number,
-    filteredPosts: null | object[],
     postsLoading: boolean,
     postsError: boolean,
-    tags: [],
     onePost: null | {},
     onePostLoading: boolean,
-    onePostError: boolean
+    onePostError: boolean,
+    idPostToDeL: null | string,
+    sortBtn: null | string
+    openAlert: boolean
 }
 
+// видаляє наступний 
 const initialState: PostsType = {
+    // всі дописи, які є в базі даних (по них розробляється пагінація)
     allPosts: null,
     allSearchedPosts: null,
+    // пости, які показуються на сторінці з урахуванням пагінації 
     posts: null,
-    page: 1,
-    searchValue: '',
-    // якщо 4 то некоректно
-    limit: 5,
-    filteredPosts: null,
     postsLoading: false,
     postsError: false,
-    tags: [],
+    // пагінація, номер сторінки і ліміт
+    page: 1,
+    limit: 5,
+    searchValue: '',
     onePost: null,
     onePostLoading: false,
     onePostError: false,
+    // id допису, який видалити 
+    idPostToDeL: null,
+    sortBtn: 'all',
+    openAlert: false
 };
 
-// редюсери які мыняють пейдж і ліміт
+export const fetchPosts: any = createAsyncThunk("posts/fetchPosts", async ({page, limit, sort, search}: any) => {
+    // let s;
+    // if (search) {
+    //     s = await axios.get(`/posts?page=${page}&limit=${limit}&search=${search}`)
+    // } else {
+    //     s = await axios.get(`/posts?page=${page}&limit=${limit}&sort=${sort}`)
+    // }
 
-export const fetchPosts: any = createAsyncThunk("posts/fetchPosts", async ({page, limit, search}: any) => {
-    let s;
-    if (search) {
-        s = await axios.get(`/posts?page=${page}&limit=${limit}&search=${search}`)
-    } else {
-        s = await axios.get(`/posts?page=${page}&limit=${limit}`)
-    }
-
-   const { data }: any = s
-    // console.log(data)
+   const { data }: any = await axios.get(`/posts?page=${page}&limit=${limit}&sort=${sort}&search=${search}`)
     return data
 });
 
@@ -69,20 +72,10 @@ export const fetchRemovePost: any = createAsyncThunk("posts/fetchRemovePost", (i
     axios.delete(`/posts/${id}`)
 });
 
-export const fetchSortPost: any = createAsyncThunk("posts/fetchSortPost", async (type) => {
-    const { data } = await axios.get(`/posts?sort=${type}`)
-    return data
-});
-
 const postsSlice = createSlice({
     name: "posts",
     initialState,
     reducers: {
-        posts_filter: (state, action) => {
-            if (state.allPosts) {
-                state.filteredPosts = state.allPosts.filter((post: any) => post.title.toLowerCase().indexOf(action.payload.toLowerCase()) > -1)
-            }
-        },
         posts_getPageNum: (state, action) => {
             state.page = action.payload
         },
@@ -91,6 +84,15 @@ const postsSlice = createSlice({
         },
         posts_getLimit: (state, action) => {
             state.limit = action.payload
+        },
+        posts_getIdPostToDel: (state, action) => {
+            state.idPostToDeL = action.payload
+        },
+        posts_getSortBtn: (state, action) => {
+            state.sortBtn = action.payload
+        },
+        posts_openAlert: (state, action) => {
+            state.openAlert = action.payload
         }
     },
     extraReducers: builder => {
@@ -125,27 +127,19 @@ const postsSlice = createSlice({
             .addCase(fetchRemovePost.pending, (state, action) => {
                 if (state.posts) {
                     state.posts = state.posts.filter((post: any) => post._id !== action.meta.arg)
+                    // state.openAlert = true
                 }
             })
-            // сортування
-            .addCase(fetchSortPost.pending, state => {
-                state.postsLoading = true;
-                state.postsError = false;
-            })
-            .addCase(fetchSortPost.fulfilled, (state, action) => {
-                state.posts = action.payload;
-                state.postsLoading = false;
-                state.postsError = false;
-            })
-            .addCase(fetchSortPost.rejected, state => {
-                state.postsError = true;
-                state.postsLoading = false;
-            })
+            // .addCase(fetchRemovePost.fulfilled, (state, action) => {
+            //     if (state.posts) {
+            //         state.openAlert = true
+            //     }
+            // })
             // 
             .addCase(fetchAllPosts.fulfilled, (state,action) => {
                 state.allPosts = action.payload;
             })
-            //
+            //            
             .addCase(fetchAllSearchedPosts.fulfilled, (state,action) => {
                 state.allSearchedPosts = action.payload;
             })
@@ -156,4 +150,4 @@ const { actions, reducer } = postsSlice;
 
 export default reducer;
 
-export const { posts_filter, posts_getPageNum, posts_getValue, posts_getLimit } = actions;
+export const { posts_getPageNum, posts_getValue, posts_getLimit, posts_getIdPostToDel, posts_getSortBtn, posts_openAlert } = actions;
