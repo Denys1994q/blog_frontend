@@ -99,8 +99,8 @@ export const AppBarComponent = (): JSX.Element => {
                     }}
                     src={
                         userData.avatarUrl
-                            ? `http://localhost:4444${userData.avatarUrl}`
-                            : `http://localhost:4444/uploads/user.png`
+                            ? `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
+                            : `${process.env.REACT_APP_API_URL}/uploads/user.png`
                     }
                     alt='user-photo'
                 />

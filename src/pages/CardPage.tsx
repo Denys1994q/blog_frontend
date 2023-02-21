@@ -91,7 +91,11 @@ const CardPage = (): JSX.Element => {
                             avatar={
                                 <Avatar
                                     alt='user photo'
-                                    src={post.user.avatarUrl ? `http://localhost:4444${post.user.avatarUrl}` : ""}
+                                    src={
+                                        post.user.avatarUrl
+                                            ? `${process.env.REACT_APP_API_URL}${post.user.avatarUrl}`
+                                            : ""
+                                    }
                                 />
                             }
                             label={post.user.fullName}
@@ -130,7 +134,7 @@ const CardPage = (): JSX.Element => {
                                             float: "left",
                                             margin: "0 20px 20px 0",
                                         }}
-                                        src={`http://localhost:4444${post.imageUrl}`}
+                                        src={`${process.env.REACT_APP_API_URL}${post.imageUrl}`}
                                         alt='dish photo'
                                     />
                                 ) : null}

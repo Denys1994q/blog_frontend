@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'http://localhost:4444'
+    baseURL: process.env.REACT_APP_API_URL
 })
 
 // функція яка перевіряє при кожному запиті не важливо якому чи ми авторизовані (чи є токен в локалстореджі)

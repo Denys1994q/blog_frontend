@@ -73,7 +73,7 @@ const CardComponent = (): JSX.Element => {
                 {post.imageUrl ? (
                     <CardMedia
                         sx={{ height: 240 }}
-                        image={`http://localhost:4444${post.imageUrl}`}
+                        image={`${process.env.REACT_APP_API_URL}${post.imageUrl}`}
                         title='dish picture'
                     />
                 ) : null}
@@ -84,7 +84,9 @@ const CardComponent = (): JSX.Element => {
                                 <Avatar
                                     sx={{ bgcolor: "#f5f5f5" }}
                                     alt='user photo'
-                                    src={post.user.avatarUrl ? `http://localhost:4444${post.user.avatarUrl}` : ""}
+                                    src={
+                                        post.user.avatarUrl ? `${process.env.REACT_APP_API_URL}${post.user.avatarUrl}` : ""
+                                    }
                                 />
                             }
                             label={post.user.fullName}

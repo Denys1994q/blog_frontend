@@ -96,7 +96,7 @@ const Comment = ({
                     <Avatar
                         sx={{ bgcolor: indigo[500] }}
                         alt='user photo'
-                        src={avatar ? `http://localhost:4444${avatar}` : ""}
+                        src={avatar ? `${process.env.REACT_APP_API_URL}${avatar}` : ""}
                     />
                 </Box>
                 {create ? (

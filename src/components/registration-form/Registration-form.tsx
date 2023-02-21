@@ -25,7 +25,7 @@ const RegistrationForm = () => {
 
     const style = {
         width: 400,
-        margin: '0 auto',
+        margin: "0 auto",
         bgcolor: "background.paper",
         border: "2px solid #000",
         boxShadow: 24,
@@ -183,7 +183,7 @@ const RegistrationForm = () => {
                             <div>
                                 <img
                                     style={{ maxWidth: "200px", marginTop: "10px" }}
-                                    src={`http://localhost:4444${imageUrl}`}
+                                    src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
                                     alt='uploaded photo'
                                 />
                             </div>

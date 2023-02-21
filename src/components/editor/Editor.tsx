@@ -161,7 +161,7 @@ const Editor = () => {
                     <div>
                         <img
                             style={{ maxWidth: "500px", marginTop: "10px" }}
-                            src={`http://localhost:4444${imageUrl}`}
+                            src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
                             alt='uploaded photo'
                         />
                     </div>
