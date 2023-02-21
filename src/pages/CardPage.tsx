@@ -21,6 +21,7 @@ const CardPage = (): JSX.Element => {
     const user: any = useSelector((state: any) => state.loginSlice.userData);
 
     useEffect(() => {
+        console.log(111);
         dispatch(fetchOnePost(id));
     }, []);
 
