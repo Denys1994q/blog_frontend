@@ -39,6 +39,7 @@ const CardComponent = (): JSX.Element => {
     const idToDel = useSelector((state: any) => state.postsSlice.idPostToDeL);
 
     const deletePost = (id: string) => {
+        console.log(22222);
         dispatch(posts_getIdPostToDel(id));
         setOpenDialog(true);
     };
@@ -85,7 +86,9 @@ const CardComponent = (): JSX.Element => {
                                     sx={{ bgcolor: "#f5f5f5" }}
                                     alt='user photo'
                                     src={
-                                        post.user.avatarUrl ? `${process.env.REACT_APP_API_URL}${post.user.avatarUrl}` : ""
+                                        post.user.avatarUrl
+                                            ? `${process.env.REACT_APP_API_URL}${post.user.avatarUrl}`
+                                            : ""
                                     }
                                 />
                             }
