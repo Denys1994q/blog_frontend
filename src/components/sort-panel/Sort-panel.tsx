@@ -39,7 +39,7 @@ const SortPanel = () => {
                     color='inherit'
                     variant='outlined'
                     // sx={{ ".MuiButtonGroup-grouped:hover": { color: "#1a1a24" } }}
-                    sx={{ ".MuiButtonGroup-grouped:hover": { background: "#1a1a24", color: "white" } }}>
+                    sx={{ ".MuiButtonGroup-grouped:hover": { background: "#1a1a24", color: "white", border: "none" } }}>
                     <Button
                         onClick={() => showSortedItems("date")}
                         sx={activeBtn === "date" ? activeBtnColor : { fontSize: "12px" }}>
