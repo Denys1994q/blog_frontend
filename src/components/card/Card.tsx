@@ -94,7 +94,7 @@ const CardComponent = (): JSX.Element => {
                             }
                             label={post.user.fullName}
                             variant='filled'
-                            sx={{ fontSize: "14px", marginBottom: "10px", bgcolor: "#5c6bc0", color: "white" }}
+                            sx={{ fontSize: "14px", marginBottom: "10px", bgcolor: "#212121", color: "white" }}
                         />
                         {user && post.user._id === user._id ? (
                             <Box sx={{ display: "flex" }}>
