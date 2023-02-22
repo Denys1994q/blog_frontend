@@ -35,7 +35,10 @@ const SortPanel = () => {
     return (
         <>
             <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
-                <ButtonGroup color='inherit' variant='outlined' aria-label='outlined primary button group'>
+                <ButtonGroup
+                    color='inherit'
+                    variant='outlined'
+                    sx={{ ".MuiButtonGroup-grouped:hover": { color: "#1a1a24" } }}>
                     <Button
                         onClick={() => showSortedItems("date")}
                         sx={activeBtn === "date" ? activeBtnColor : { fontSize: "12px" }}>
@@ -43,7 +46,13 @@ const SortPanel = () => {
                     </Button>
                     <Button
                         onClick={() => showSortedItems("views")}
-                        sx={activeBtn === "views" ? activeBtnColor : { fontSize: "12px" }}>
+                        sx={
+                            activeBtn === "views"
+                                ? activeBtnColor
+                                : {
+                                      fontSize: "12px",
+                                  }
+                        }>
                         Most viewed
                     </Button>
                 </ButtonGroup>

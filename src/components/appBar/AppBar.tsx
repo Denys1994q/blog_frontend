@@ -14,11 +14,6 @@ import HomeIcon from "@mui/icons-material/Home";
 
 import DialogComponent from "../dialog/Dialog";
 
-// показувати діалогові вікна (успішно зареєстровано і тд)
-{
-    /* <Paper /> */
-}
-// кнопка додому на головну
 export const AppBarComponent = (): JSX.Element => {
     const dispatch = useDispatch();
     const userData = useSelector((state: any) => state.loginSlice.userData);
@@ -86,20 +81,28 @@ export const AppBarComponent = (): JSX.Element => {
                     variant='contained'
                     color='error'
                     startIcon={<LoginIcon />}
-                    sx={{ minWidth: "60px", fontSize: "14px", padding: "5px 5px" }}></Button>
+                    sx={{
+                        minWidth: "40px",
+                        padding: "7px 5px",
+                        ".MuiButton-startIcon": { margin: 0 },
+                    }}>
+                    {/* <LoginIcon /> */}
+                </Button>
             </Link>
             {userData ? (
                 <img
                     style={{
-                        width: "40px",
-                        height: "40px",
+                        width: "35px",
+                        height: "35px",
                         objectFit: "cover",
                         borderRadius: "50%",
                         marginLeft: "10px",
                     }}
                     src={
                         userData.avatarUrl
-                            ? `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
+                            ? // ? `https://blog-backend1994.onrender.com/${userData.avatarUrl}`
+                              // : `https://blog-backend1994.onrender.com/uploads/user.png`
+                              `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
                             : `${process.env.REACT_APP_API_URL}uploads/user.png`
                     }
                     alt='user-photo'

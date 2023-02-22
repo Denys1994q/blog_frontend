@@ -21,7 +21,6 @@ const CardPage = (): JSX.Element => {
     const user: any = useSelector((state: any) => state.loginSlice.userData);
 
     useEffect(() => {
-        console.log(111);
         dispatch(fetchOnePost(id));
     }, []);
 
@@ -87,7 +86,7 @@ const CardPage = (): JSX.Element => {
         <>
             {post ? (
                 <>
-                    <Paper variant='elevation' sx={{ padding: "10px", marginBottom: "20px" }}>
+                    <Paper variant='elevation' sx={{ width: 1, padding: "10px", marginBottom: "20px" }}>
                         <Chip
                             avatar={
                                 <Avatar
@@ -104,7 +103,13 @@ const CardPage = (): JSX.Element => {
                             variant='outlined'
                             color='default'
                         />
-                        <Typography variant='h2' sx={{ textAlign: "center", margin: "10px 0 20px 0" }}>
+                        <Typography
+                            align='center'
+                            // paragraph
+                            variant='h3'
+                            // noWrap
+                            sx={{ margin: "10px 0 20px 0" }}
+                        >
                             {post.title}
                         </Typography>
                         <Paper variant='outlined' sx={{ marginBottom: "20px" }}>
@@ -130,7 +135,7 @@ const CardPage = (): JSX.Element => {
                                 {post.imageUrl ? (
                                     <img
                                         style={{
-                                            width: "35%",
+                                            width: "45%",
                                             objectFit: "contain",
                                             float: "left",
                                             margin: "0 20px 20px 0",
