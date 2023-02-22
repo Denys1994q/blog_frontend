@@ -130,7 +130,7 @@ export const AppBarComponent = (): JSX.Element => {
                                 <HomeIcon sx={{ padding: "0", fontSize: "20px", cursor: "pointer" }} />
                             </Button>
                         </Link>
-                        <Box sx={{ marginLeft: "auto" }}>{userData ? logoutBtns : loginBtns}</Box>
+                        <Box sx={{ marginLeft: "auto", display: "flex" }}>{userData ? logoutBtns : loginBtns}</Box>
                     </Toolbar>
                 </AppBar>
             </Box>
