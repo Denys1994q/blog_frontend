@@ -112,7 +112,7 @@ const Editor = () => {
 
     useEffect(() => {
         // ленгс перевіряти відповідно до беку
-        if (text && title.length >= 30) {
+        if (text && title.length >= 10) {
             setEmptyData(false);
         } else {
             setEmptyData(true);
