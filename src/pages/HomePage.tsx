@@ -39,6 +39,8 @@ const HomePage = () => {
                         </Grid>
                         <PaginationPanel />
                     </>
+                ) : posts && posts.length === 0 ? (
+                    <h2>Sorry, nothing found</h2>
                 ) : (
                     <Spinner />
                 )}
