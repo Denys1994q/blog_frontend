@@ -24,7 +24,10 @@ const StackComponent = ({ data }: StackComponentProps) => {
 
     return (
         <Grid container sx={{ fontSize: "14px" }}>
-            <Stack direction={{ lg: "row", md: "row", sm: "row", xs: "column" }} spacing={1}>
+            <Stack
+                direction={{ lg: "row", md: "row", sm: "row", xs: "column" }}
+                sx={{ flexWrap: "wrap", rowGap: "10px" }}
+                spacing={1}>
                 {content}
             </Stack>
         </Grid>
