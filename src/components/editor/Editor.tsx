@@ -170,7 +170,7 @@ const Editor = () => {
             <TextField
                 value={title}
                 onChange={e => setTitle(e.target.value)}
-                helperText='at least 30 characters'
+                helperText='at least 10 characters'
                 label='Title'
                 autoFocus
                 fullWidth

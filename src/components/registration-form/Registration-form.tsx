@@ -97,7 +97,7 @@ const RegistrationForm = () => {
                     <TextField
                         {...register("fullName", {
                             required: "Please enter a name",
-                            minLength: { value: 5, message: "At least 5 letters" },
+                            minLength: { value: 3, message: "At least 3 letters" },
                         })}
                         error={Boolean(errors.fullName?.message)}
                         helperText={errors.fullName?.message}
