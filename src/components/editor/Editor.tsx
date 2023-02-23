@@ -161,7 +161,7 @@ const Editor = () => {
                     </Button>
                     <div>
                         <img
-                            style={{ maxWidth: "500px", marginTop: "10px" }}
+                            style={{ maxWidth: "300px", marginTop: "10px" }}
                             src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
                             alt='uploaded photo'
                         />
