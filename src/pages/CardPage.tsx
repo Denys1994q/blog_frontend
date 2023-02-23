@@ -28,11 +28,29 @@ const CardPage = (): JSX.Element => {
         post && post.energy
             ? post.energy.map((item: any) => {
                   return (
-                      <li>
-                          <span style={{ color: "#008080", fontSize: "18px", fontWeight: "bold" }}>{item.value}</span>
-                          {item.name !== "calories" ? "g " : " "}
-                          {item.name}
-                      </li>
+                      <>
+                          {item.value.length > 0 ? (
+                              <li style={{ display: "flex", margin: "5px", }}>
+                                  <span
+                                      style={{
+                                          color: "#008080",
+                                          fontSize: "14px",
+                                          fontWeight: "bold",
+                                          width: "20px",
+                                          display: "flex",
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          backgroundColor: "#fff59d",
+                                          borderRadius: "50%",
+                                          marginRight: '5px'
+                                      }}>
+                                      {item.value}
+                                  </span>
+                                  {item.name !== "calories" ? "g " : " "}
+                                  {item.name}
+                              </li>
+                          ) : null}
+                      </>
                   );
               })
             : null;
@@ -108,8 +126,7 @@ const CardPage = (): JSX.Element => {
                             // paragraph
                             variant='h3'
                             // noWrap
-                            sx={{ margin: "10px 0 20px 0" }}
-                        >
+                            sx={{ margin: "10px 0 20px 0" }}>
                             {post.title}
                         </Typography>
                         <Paper variant='outlined' sx={{ marginBottom: "20px" }}>
@@ -119,15 +136,18 @@ const CardPage = (): JSX.Element => {
                                     flexWrap: "wrap",
                                     columnGap: "30px",
                                     justifyContent: "center",
+                                    alignItems: "center",
                                 }}>
                                 {energyInfoContent}
-                                <li>
-                                    <span style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}>
-                                        {post.cookTime}
-                                    </span>
-                                    {"m "}
-                                    <AccessTimeIcon />
-                                </li>
+                                {post.cookTime && (
+                                    <li>
+                                        <span style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}>
+                                            {post.cookTime}
+                                        </span>
+                                        {"m "}
+                                        <AccessTimeIcon />
+                                    </li>
+                                )}
                             </ul>
                         </Paper>
                         <Grid container>
@@ -148,8 +168,9 @@ const CardPage = (): JSX.Element => {
                                     <ReactMarkdown className='markdown' children={post.text} />
                                 </p>
                             </div>
-
-                            {post.ingredients.length > 0 ? <StackComponent data={post.ingredients} /> : null}
+                            {post.ingredients.length > 0 && post.ingredients[0] ? (
+                                <StackComponent data={post.ingredients} />
+                            ) : null}
                         </Grid>
                     </Paper>
                     <Paper sx={{ padding: "10px" }}>

@@ -21,7 +21,7 @@ const Editor = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [title, setTitle] = useState("");
-    const [ingredients, setIngredients] = useState("");
+    const [ingredients, setIngredients] = useState<any>("");
     const [text, setText] = useState("");
     const [calories, setCalories] = useState("");
     const [fat, setFat] = useState("");
@@ -75,7 +75,7 @@ const Editor = () => {
             const fields = {
                 title: title,
                 text: text,
-                ingredients: ingredients.length > 0 ? ingredients.split(",") : [],
+                ingredients: Array.isArray(ingredients) ? ingredients : ingredients.split(","),
                 energy: [
                     { name: "calories", value: calories },
                     { name: "fat", value: fat },
@@ -105,6 +105,7 @@ const Editor = () => {
             dispatch(posts_getPageNum(1));
             dispatch(fetchPosts({ page: 1, limit: limitN }));
         } catch (err) {
+            console.log(err);
             setIsLoading(false);
             setOpenAlert(true);
         }

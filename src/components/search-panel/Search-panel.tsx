@@ -71,7 +71,20 @@ const SearchPanel = () => {
                 />
                 {allSearchedPosts ? (
                     <Typography gutterBottom variant='inherit' component='div' sx={{ margin: "10px 0 0 0" }}>
-                        Found: <span style={{ borderBottom: "1px solid black" }}>{allSearchedPosts.length}</span>
+                        Found:{" "}
+                        <span
+                            style={{
+                                display: "inline-flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "20px",
+                                height: "20px",
+                                backgroundColor: "#fff59d",
+                                padding: "5px",
+                                borderRadius: "50%",
+                            }}>
+                            {allSearchedPosts.length}
+                        </span>
                     </Typography>
                 ) : null}
             </Box>

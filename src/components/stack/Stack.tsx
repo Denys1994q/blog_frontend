@@ -11,23 +11,21 @@ type StackComponentProps = {
 
 const StackComponent = ({ data }: StackComponentProps) => {
     const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f5ca69",
+        backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff59d",
         ...theme.typography.h6,
         padding: theme.spacing(1),
         textAlign: "center",
+        fontWeight: "bold",
         color: theme.palette.text.secondary,
     }));
 
     const content = data.map(item => {
-        return <Item sx={{ margin: 0 }}>{item}</Item>;
+        return <Item sx={{ ".MuiPaper-root": { marginLeft: "0" } }}>{item}</Item>;
     });
 
     return (
         <Grid container sx={{ fontSize: "14px" }}>
-            <Stack
-                direction={{ lg: "row", md: "row", sm: "row", xs: "column" }}
-                sx={{ flexWrap: "wrap", gap: "10px" }}
-                spacing={1}>
+            <Stack direction='row' sx={{ flexWrap: "wrap", gap: "10px" }}>
                 {content}
             </Stack>
         </Grid>

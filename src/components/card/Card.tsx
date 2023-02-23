@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     fetchRemovePost,
     posts_getIdPostToDel,
+    fetchAllSearchedPosts,
     posts_getValue,
     posts_openAlert,
     fetchAllPosts,
@@ -39,7 +40,6 @@ const CardComponent = (): JSX.Element => {
     const idToDel = useSelector((state: any) => state.postsSlice.idPostToDeL);
 
     const deletePost = (id: string) => {
-        console.log(22222);
         dispatch(posts_getIdPostToDel(id));
         setOpenDialog(true);
     };
@@ -49,6 +49,8 @@ const CardComponent = (): JSX.Element => {
         dispatch(fetchRemovePost(idToDel));
         // пагінація: отримуємо всі пости без видаленого
         dispatch(fetchAllPosts({}));
+
+        dispatch(fetchAllSearchedPosts(searchValue));
 
         // якщо на сторінці один допис і його видаляємо, то переходимо на попередню сторінку
         if (posts.length === 1) {
@@ -68,9 +70,9 @@ const CardComponent = (): JSX.Element => {
         return date;
     };
 
-    const content = posts.map((post: any) => {
+    const content = posts.map((post: any, index: any) => {
         return (
-            <Card sx={{ marginBottom: "50px" }}>
+            <Card key={index} sx={{ marginBottom: "50px" }}>
                 {post.imageUrl ? (
                     <CardMedia
                         sx={{ height: 240 }}
@@ -127,16 +129,17 @@ const CardComponent = (): JSX.Element => {
                     <Box sx={{ display: "flex" }}>
                         <Badge
                             badgeContent={post.viewsCount}
-                            color='primary'
                             showZero
-                            sx={{ marginRight: "20px", ".MuiBadge-badge": { fontSize: "12px" } }}>
+                            sx={{
+                                marginRight: "20px",
+                                ".MuiBadge-badge": { fontSize: "12px", bgcolor: "#123e60", color: "white" },
+                            }}>
                             <RemoveRedEyeIcon fontSize='large' color='action' />
                         </Badge>
                         <Badge
                             badgeContent={post.comments.length}
-                            color='primary'
                             showZero
-                            sx={{ ".MuiBadge-badge": { fontSize: "12px" } }}>
+                            sx={{ ".MuiBadge-badge": { fontSize: "12px", bgcolor: "#123e60", color: "white" } }}>
                             <CommentIcon fontSize='large' color='action' />
                         </Badge>
                     </Box>

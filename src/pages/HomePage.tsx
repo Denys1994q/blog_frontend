@@ -40,7 +40,7 @@ const HomePage = () => {
                         <PaginationPanel />
                     </>
                 ) : posts && posts.length === 0 ? (
-                    <h2>Sorry, nothing found</h2>
+                    <h4>No posts yet</h4>
                 ) : (
                     <Spinner />
                 )}

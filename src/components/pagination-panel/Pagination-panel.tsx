@@ -16,14 +16,7 @@ const PaginationPanel = () => {
 
     const getPage = (e: any, pageN: any) => {
         dispatch(posts_getPageNum(pageN));
-        // тут не треба поділ такий
-        // if (searchValue) {
-        //     dispatch(fetchPosts({ page: pageN, limit: limitN, search: searchValue }));
-        // } else {
-        //     dispatch(fetchPosts({ page: pageN, limit: limitN, sort: sortBtn }));
-        // }
         dispatch(fetchPosts({ page: pageN, limit: limitN, sort: sortBtn, search: searchValue }));
-        // треба якщо пустий інпут прописати
     };
 
     return (
@@ -38,10 +31,17 @@ const PaginationPanel = () => {
                         }
                         onChange={(e, page) => getPage(e, page)}
                         page={pageN}
-                        color='primary'
+                        // color='primary'
                         sx={{
-                            ".MuiPaginationItem-root": { fontSize: "14px" },
+                            ".MuiPaginationItem-root": {
+                                fontSize: "14px",
+                                bgcolor: "#123e60",
+                                opacity: 1,
+                                color: "white",
+                            },
+                            ".MuiPaginationItem-root.Mui-selected": { bgcolor: "#123e60", opacity: 1 },
                             ".MuiSvgIcon-root": { fontSize: "20px" },
+                            ".MuiPaginationItem-previousNext": { bgcolor: "#e0e0e0", color: "black" },
                         }}
                     />
                 </Stack>
