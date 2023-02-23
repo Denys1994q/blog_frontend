@@ -19,14 +19,14 @@ const StackComponent = ({ data }: StackComponentProps) => {
     }));
 
     const content = data.map(item => {
-        return <Item>{item}</Item>;
+        return <Item sx={{ margin: 0 }}>{item}</Item>;
     });
 
     return (
         <Grid container sx={{ fontSize: "14px" }}>
             <Stack
                 direction={{ lg: "row", md: "row", sm: "row", xs: "column" }}
-                sx={{ flexWrap: "wrap", rowGap: "10px" }}
+                sx={{ flexWrap: "wrap", gap: "10px" }}
                 spacing={1}>
                 {content}
             </Stack>
