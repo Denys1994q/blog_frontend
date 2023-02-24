@@ -40,6 +40,7 @@ const CardComponent = (): JSX.Element => {
     const idToDel = useSelector((state: any) => state.postsSlice.idPostToDeL);
 
     const deletePost = (id: string) => {
+        console.log(1);
         dispatch(posts_getIdPostToDel(id));
         setOpenDialog(true);
     };
