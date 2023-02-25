@@ -36,12 +36,12 @@ const PaginationPanel = () => {
                             ".MuiPaginationItem-root": {
                                 fontSize: "14px",
                                 bgcolor: "#123e60",
-                                opacity: 1,
+                                opacity: .5,
                                 color: "white",
                             },
                             ".MuiPaginationItem-root.Mui-selected": { bgcolor: "#123e60", opacity: 1 },
                             ".MuiSvgIcon-root": { fontSize: "20px" },
-                            ".MuiPaginationItem-previousNext": { bgcolor: "#e0e0e0", color: "black" },
+                            ".MuiPaginationItem-previousNext": { bgcolor: "#e0e0e0", opacity: .2, color: "black" },
                         }}
                     />
                 </Stack>

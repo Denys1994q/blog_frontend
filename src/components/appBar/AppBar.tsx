@@ -102,8 +102,10 @@ export const AppBarComponent = (): JSX.Element => {
                         userData.avatarUrl
                             ? // ? `https://blog-backend1994.onrender.com/${userData.avatarUrl}`
                               // : `https://blog-backend1994.onrender.com/uploads/user.png`
-                              `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
-                            : `${process.env.REACT_APP_API_URL}uploads/user.png`
+                              //   `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
+                              // : `${process.env.REACT_APP_API_URL}uploads/user.png`
+                              `${userData.avatarUrl}`
+                            : "https://res.cloudinary.com/dw60kllwn/image/upload/v1677322245/vj3pd594h5egh6vdgitg.png"
                     }
                     alt='user-photo'
                 />

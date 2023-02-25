@@ -183,7 +183,8 @@ const RegistrationForm = () => {
                             <div>
                                 <img
                                     style={{ maxWidth: "200px", marginTop: "10px" }}
-                                    src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
+                                    // src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
+                                    src={`${imageUrl}`}
                                     alt='uploaded photo'
                                 />
                             </div>

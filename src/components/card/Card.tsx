@@ -77,7 +77,9 @@ const CardComponent = (): JSX.Element => {
                 {post.imageUrl ? (
                     <CardMedia
                         sx={{ height: 240 }}
-                        image={`${process.env.REACT_APP_API_URL}${post.imageUrl}`}
+                        // image={`${process.env.REACT_APP_API_URL}${post.imageUrl}`}
+                        // image={`http://localhost:4444${post.imageUrl}`}
+                        image={`${post.imageUrl}`}
                         title='dish picture'
                     />
                 ) : null}
@@ -90,7 +92,8 @@ const CardComponent = (): JSX.Element => {
                                     alt='user photo'
                                     src={
                                         post.user.avatarUrl
-                                            ? `${process.env.REACT_APP_API_URL}${post.user.avatarUrl}`
+                                            // ? `${process.env.REACT_APP_API_URL}${post.user.avatarUrl}`
+                                            ? `${post.user.avatarUrl}`
                                             : ""
                                     }
                                 />

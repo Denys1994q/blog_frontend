@@ -30,7 +30,7 @@ const CardPage = (): JSX.Element => {
                   return (
                       <>
                           {item.value.length > 0 ? (
-                              <li style={{ display: "flex", margin: "5px", }}>
+                              <li style={{ display: "flex", margin: "5px" }}>
                                   <span
                                       style={{
                                           color: "#008080",
@@ -42,7 +42,7 @@ const CardPage = (): JSX.Element => {
                                           alignItems: "center",
                                           backgroundColor: "#fff59d",
                                           borderRadius: "50%",
-                                          marginRight: '5px'
+                                          marginRight: "5px",
                                       }}>
                                       {item.value}
                                   </span>
@@ -111,7 +111,8 @@ const CardPage = (): JSX.Element => {
                                     alt='user photo'
                                     src={
                                         post.user.avatarUrl
-                                            ? `${process.env.REACT_APP_API_URL}${post.user.avatarUrl}`
+                                            ? // ? `${process.env.REACT_APP_API_URL}${post.user.avatarUrl}`
+                                              `${post.user.avatarUrl}`
                                             : ""
                                     }
                                 />
@@ -160,7 +161,8 @@ const CardPage = (): JSX.Element => {
                                             float: "left",
                                             margin: "0 20px 20px 0",
                                         }}
-                                        src={`${process.env.REACT_APP_API_URL}${post.imageUrl}`}
+                                        // src={`${process.env.REACT_APP_API_URL}${post.imageUrl}`}
+                                        src={`${post.imageUrl}`}
                                         alt='dish photo'
                                     />
                                 ) : null}
