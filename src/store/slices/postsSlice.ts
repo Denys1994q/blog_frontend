@@ -41,13 +41,6 @@ const initialState: PostsType = {
 };
 
 export const fetchPosts: any = createAsyncThunk("posts/fetchPosts", async ({page, limit, sort, search}: any) => {
-    // let s;
-    // if (search) {
-    //     s = await axios.get(`/posts?page=${page}&limit=${limit}&search=${search}`)
-    // } else {
-    //     s = await axios.get(`/posts?page=${page}&limit=${limit}&sort=${sort}`)
-    // }
-
    const { data }: any = await axios.get(`/posts?page=${page}&limit=${limit}&sort=${sort}&search=${search}`)
     return data
 });
@@ -63,8 +56,8 @@ export const fetchAllSearchedPosts: any = createAsyncThunk("posts/fetchAllSearch
 });
 
 
-export const fetchOnePost: any = createAsyncThunk("posts/fetchOnePost", async (id) => {
-    const { data } = await axios.get(`/posts/${id}`)
+export const fetchOnePost: any = createAsyncThunk("posts/fetchOnePost", async ({id, views}: any) => {
+    const { data }: any = await axios.get(`/posts/${id}?views=${views}`)
     return data
 });
 
@@ -127,15 +120,8 @@ const postsSlice = createSlice({
             .addCase(fetchRemovePost.pending, (state, action) => {
                 if (state.posts) {
                     state.posts = state.posts.filter((post: any) => post._id !== action.meta.arg)
-                    // state.openAlert = true
                 }
             })
-            // .addCase(fetchRemovePost.fulfilled, (state, action) => {
-            //     if (state.posts) {
-            //         state.openAlert = true
-            //     }
-            // })
-            // 
             .addCase(fetchAllPosts.fulfilled, (state,action) => {
                 state.allPosts = action.payload;
             })

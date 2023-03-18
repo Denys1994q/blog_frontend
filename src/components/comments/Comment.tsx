@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import axios from "../../axios";
-import { useEffect } from "react";
 
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -54,12 +53,12 @@ const Comment = ({
     const user: any = useSelector((state: any) => state.loginSlice.userData);
     const currentPost: any = useSelector((state: any) => state.postsSlice.onePost);
 
+    // додати, видалити комент, лайки - йде новий запит за постом. Додати у функцію параметр якийсь, який бачити на бекенді і не збільшувати кількість переглядів. 
     const sendComment = () => {
         const fields = {
             content: text,
-            // votes: { result: "like" },
         };
-        axios.post(`/posts/${postId}/comments`, fields).then(() => dispatch(fetchOnePost(postId)));
+        axios.post(`/posts/${postId}/comments`, fields).then(() => dispatch(fetchOnePost({id: postId})));
         setText("");
     };
 
@@ -71,12 +70,12 @@ const Comment = ({
         currentPost.comments.length !== 1
             ? axios
                   .delete(`/posts/${postId}/${commentId}/comments`)
-                  .then(() => dispatch(fetchOnePost(postId)))
+                  .then(() => dispatch(fetchOnePost({id: postId})))
                   .then(() => dispatch(posts_openAlert(true)))
             : axios
                   .delete(`/posts/${postId}/${commentId}/comments`)
                   .then(() => dispatch(posts_openAlert(true)))
-                  .then(() => dispatch(fetchOnePost(postId)))
+                  .then(() => dispatch(fetchOnePost({id: postId})))
                   .then(() => dispatch(posts_openAlert(false)));
     };
 
@@ -96,7 +95,6 @@ const Comment = ({
                     <Avatar
                         sx={{ bgcolor: indigo[500] }}
                         alt='user photo'
-                        // src={avatar ? `${process.env.REACT_APP_API_URL}${avatar}` : ""}
                         src={avatar ? `${avatar}` : ""}
                     />
                 </Box>

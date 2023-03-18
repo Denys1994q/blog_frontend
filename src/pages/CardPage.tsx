@@ -21,7 +21,7 @@ const CardPage = (): JSX.Element => {
     const user: any = useSelector((state: any) => state.loginSlice.userData);
 
     useEffect(() => {
-        dispatch(fetchOnePost(id));
+        dispatch(fetchOnePost( {id: id, views: 1}));
     }, []);
 
     const energyInfoContent =

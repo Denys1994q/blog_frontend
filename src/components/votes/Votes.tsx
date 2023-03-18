@@ -54,7 +54,7 @@ const Votes = ({ liked, disliked, commentIndex, commentId, postId }: VotesProps)
                     userId: user._id,
                     vote,
                 };
-                axios.patch("/comments/update", data).then(() => dispatch(fetchOnePost(postId)));
+                axios.patch("/comments/update", data).then(() => dispatch(fetchOnePost({ id: postId })));
             } else {
                 const vote = {
                     result: voteStr,
@@ -65,7 +65,7 @@ const Votes = ({ liked, disliked, commentIndex, commentId, postId }: VotesProps)
                     userId: user._id,
                     vote,
                 };
-                axios.post("/comments/addVote", data).then(() => dispatch(fetchOnePost(postId)));
+                axios.post("/comments/addVote", data).then(() => dispatch(fetchOnePost({ id: postId })));
             }
         } else {
             const vote = {
@@ -77,7 +77,7 @@ const Votes = ({ liked, disliked, commentIndex, commentId, postId }: VotesProps)
                 userId: user._id,
                 vote,
             };
-            axios.post("/comments/addVote", data).then(() => dispatch(fetchOnePost(postId)));
+            axios.post("/comments/addVote", data).then(() => dispatch(fetchOnePost({ id: postId })));
         }
     };
 
@@ -105,7 +105,7 @@ const Votes = ({ liked, disliked, commentIndex, commentId, postId }: VotesProps)
 
     const removeVote = () => {
         const userId = user._id;
-        axios.delete(`/comments/${commentId}/${userId}/removeVote`).then(() => dispatch(fetchOnePost(postId)));
+        axios.delete(`/comments/${commentId}/${userId}/removeVote`).then(() => dispatch(fetchOnePost({id: postId})));
     };
 
     const usersWhoLiked = (str: string) => {
